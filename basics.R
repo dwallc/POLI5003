@@ -14,7 +14,7 @@ anes <- read.table("ANES_2008.csv", header=T, sep=",", row.names="id")
 anes <- read.csv("ANES_2008.csv", row.names="id") 
                                 # The read.csv() command is an alternative version of read.table() 
                                 # with the appropriate options already specified
-
+ 
 # Built-in help
 ?read.csv                       # Open the help file for a command 
 ??import                        # Search help files
