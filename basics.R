@@ -1,4 +1,5 @@
 # POLI 5003						# The number sign indicates a comment: R ignores anything after one.
+# Frederick Solt, Department of Political Science, University of Iowa
 # R Code Examples File			
 
 # Importing data 
