@@ -47,7 +47,7 @@ fake.state$regdays <- predict(m2, fake.state)
 
 ggplot(fake.state, aes(stategini, regdays)) + geom_line() 
 
-# Back to m1--since we don't have theory, m2 could just be overfitting the data
+# Back to m1
 
 # Influence: outlying observations with leverage
 influenceIndexPlot(m1, id.n=3, labels=states$state)
