@@ -49,6 +49,7 @@ ggplot(fake.state, aes(stategini, regdays)) + geom_line()
 
 # Back to m1
 
+# Nuisances
 # Influence: outlying observations with leverage
 influenceIndexPlot(m1, id.n=3, labels=states$state)
 
