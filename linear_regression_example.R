@@ -12,7 +12,7 @@ if(require(car) == FALSE) {
 } 
 
 # Load data
-states <- read.csv("statereg.csv")
+states <- read.csv(url("https://raw2.github.com/fsolt/POLI5003/master/statereg.csv"))
 
 # Do states with more income inequality have earlier registration deadlines?
 qplot(y = regdays, x= stategini, data=states)
