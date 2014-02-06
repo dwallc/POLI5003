@@ -2,6 +2,7 @@
 # Frederick Solt, Department of Political Science, University of Iowa
 # R Code Examples File			
 
+
 # Importing data 
 anes <- read.table("ANES_2008.csv", header=T, sep=",", row.names="id") 
 								# The read.table() command reads in data of various simple formats, 
