@@ -15,7 +15,7 @@ ipak(packages)
 states <- read.csv(text = getURL("https://raw2.github.com/fsolt/POLI5003/master/statereg.csv"))
 
 # Do states with more income inequality have earlier registration deadlines?
-m1 <- lm(regdays ~ stategini + stategini + over64 + college + stincpc +
+m1 <- lm(regdays ~ stategini + stdiversity + over64 + college + stincpc +
              south, data=states)
 
 summary(m1)
