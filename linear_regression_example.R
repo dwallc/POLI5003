@@ -60,7 +60,5 @@ compareCoefs(m1, m1a)
 
 # Multicollinearity
 vif(m1)
-sqrt(vif(m1)) #confidence intervals increased by a factor of root VIF
-
-
+sqrt(vif(m1)) #confidence intervals are increased by a factor of root VIF
 
