@@ -22,23 +22,19 @@ summary(m1)
 
 # What are the relative magnitudes of the estimated effects?
 # Maximum effects
-states.range <- apply(states[,4:9], 2, function(x) max(x) - min(x)) # [,4:9] refers to the variables used in model "m1"
-states.range
+states.range <- apply(states[,4:9], 2, function(x) max(x) - min(x)) 
 max.effects <- states.range * m1$coef[2:7]
-max.effects
 
 # Of course, you can choose a different range, like twice
 # the standard deviation (roughly the range of the middle 2/3s of observations)
 states.range.2sd <- apply(states[,4:9], 2, function(x) 2*sd(x)) 
-states.range.2sd
 sd2.effects <- states.range.2sd * m1$coef[2:7]
-sd2.effects
 
 # An alternative: standardized coefficients (actually not really popular in polisci)
 states.st <- data.frame(scale(states[,c(1,3:9)])) # scale() standardizes variables (subtracts the mean and divides by sd)
 states.st$state <- states$state
 m1.st <- lm(regdays ~ stategini + stdiversity + over64 + college + stincpc +
-             south, data=states.st)
+                south, data=states.st)
 summary(m1.st)
 
 # Simulation
@@ -70,14 +66,17 @@ m2.sims <- sim(m2, n.sims)
 apply(m2.sims@coef, 2, mean)
 
 
-coef.gini <- data.frame(fake_stdiversity = seq(min(states$stategini), max(states$stategini), 
-                        length.out=100), coef_gini = NA, ub_gini = NA, lb_gini = NA)
+coef.gini <- data.frame(fake_stdiversity = seq(min(states$stdiversity), max(states$stdiversity), 
+                                               length.out=100), coef_gini = NA, ub_gini = NA, lb_gini = NA)
 
 
 for(i in 1:100) {   
-    coef.gini$coef_gini[i] <- mean(m2.sims@coef[,2] + coef.gini$fake_stdiversity[i]*m2.sims@coef[,8])
-    coef.gini$ub_gini[i] <- quantile(m2.sims@coef[,2] + coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .975)
-    coef.gini$lb_gini[i] <- quantile(m2.sims@coef[,2] + coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .025)    
+    coef.gini$coef_gini[i] <- mean(m2.sims@coef[,2] + 
+                                       coef.gini$fake_stdiversity[i]*m2.sims@coef[,8])
+    coef.gini$ub_gini[i] <- quantile(m2.sims@coef[,2] + 
+                                         coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .975)
+    coef.gini$lb_gini[i] <- quantile(m2.sims@coef[,2] + 
+                                         coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .025)    
 }
 
 gini.coef.plot <- ggplot(coef.gini, aes(x = fake_stdiversity, y = coef_gini)) + 
@@ -89,7 +88,7 @@ gini.coef.plot
 
 # This also means effect of diversity is affected by level of inequality
 coef.div <- data.frame(fake_stategini = seq(min(states$stategini), max(states$stategini), 
-                                               length.out=100), coef_div = NA, ub_div = NA, lb_div = NA)
+                                            length.out=100), coef_div = NA, ub_div = NA, lb_div = NA)
 
 for(i in 1:100) {   
     coef.div$coef_div[i] <- mean(m2.sims@coef[,2] + coef.div$fake_stategini[i]*m2.sims@coef[,8])
