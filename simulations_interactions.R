@@ -67,16 +67,28 @@ apply(m2.sims@coef, 2, mean)
 
 
 coef.gini <- data.frame(fake_stdiversity = seq(min(states$stdiversity), max(states$stdiversity), 
+<<<<<<< HEAD
                                                length.out=100), coef_gini = NA, ub_gini = NA, lb_gini = NA)
+=======
+                        length.out=100), coef_gini = NA, ub_gini = NA, lb_gini = NA)
+>>>>>>> upstream/master
 
 
 for(i in 1:100) {   
     coef.gini$coef_gini[i] <- mean(m2.sims@coef[,2] + 
+<<<<<<< HEAD
                                        coef.gini$fake_stdiversity[i]*m2.sims@coef[,8])
     coef.gini$ub_gini[i] <- quantile(m2.sims@coef[,2] + 
                                          coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .975)
     coef.gini$lb_gini[i] <- quantile(m2.sims@coef[,2] + 
                                          coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .025)    
+=======
+            coef.gini$fake_stdiversity[i]*m2.sims@coef[,8])
+    coef.gini$ub_gini[i] <- quantile(m2.sims@coef[,2] + 
+            coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .975)
+    coef.gini$lb_gini[i] <- quantile(m2.sims@coef[,2] + 
+            coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .025)    
+>>>>>>> upstream/master
 }
 
 gini.coef.plot <- ggplot(coef.gini, aes(x = fake_stdiversity, y = coef_gini)) + 
