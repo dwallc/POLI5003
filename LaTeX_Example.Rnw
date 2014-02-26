@@ -133,7 +133,7 @@ Note that the \verb+\label+ command, which I use for all tables and figures, let
 The bibliography is easily generated using the two commands below.  The \verb+ajps+ style is one I hacked together myself based on the \verb+apsr+ style floating around the web, which neglects to put a comma after the second-to-last name in a list of three or more authors <shiver>. 
 
 \bibliographystyle{ajps}
-\bibliography{FSLibrary}
+\bibliography{ExampleLibrary}
 
 \end{document}
 
