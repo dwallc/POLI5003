@@ -12,7 +12,7 @@ packages <- c("ggplot2", "RCurl", "arm")
 ipak(packages)
 
 # Again with the state registration deadlines: first load the data
-states <- read.csv(text = getURL("https://raw2.github.com/fsolt/POLI5003/master/statereg.csv"))
+states2 <- read.csv("https://raw.github.com/fsolt/POLI5003/master/statereg.csv")
 
 # Do states with more income inequality have earlier registration deadlines?
 m1 <- lm(regdays ~ stategini + stdiversity + over64 + college + stincpc +
