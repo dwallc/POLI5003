@@ -65,6 +65,7 @@ states.data <- list(N = nrow(states), regdays = states$regdays, stategini = stat
                    college = states$college, stincpc = states$stincpc, south = states$south)
 
 # Now we can run it
+set.seed(324)
 m1.stan <- stan(model_code = regdays.code, data = states.data, 
                 iter = 10000, chains = 3)
 
