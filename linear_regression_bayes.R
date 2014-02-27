@@ -25,6 +25,8 @@ summary(m1)
 # Bayesian Linear Regression in Stan
 # Install by following the directions at <https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started>
 require(rstan)
+set_cppo("fast")
+set_cppo('debug')
 
 # First we have to define the model
 regdays.code <- '
