@@ -103,9 +103,9 @@ m1.stan2.sim <- as.data.frame(m1.stan2)
 
 # HDI.posterior is based, in part, on Kruschke (2011, 628-29)
 HDI.posterior <- function(data = NULL, mass = .95) {
-    n.var <- dim(data)[2]-2
+    n.vars <- dim(data)[2]-2
     results.HDI <- matrix(rep(NA,3*n.vars), nrow=n.vars, ncol=3)
-    for (var in 1:n.var) {
+    for (var in 1:n.vars) {
         post <- data[,var]
         sorted.post <- sort(post)
         ci.idx <- floor(mass * length(sorted.post))
