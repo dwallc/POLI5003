@@ -14,10 +14,6 @@ ipak(packages)
 # Once again with the state registration deadlines: first load the data
 states <- read.csv(text = getURL("https://raw2.github.com/fsolt/POLI5003/master/statereg.csv"))
 
-# Standardize continuous IVs by dividing by 2 s.d.s (per Gelman (2008))
-for (iv in 3:9) {
-    states[,iv] <- states[,iv]/(2*sd(states[,iv]))
-}
 
 # Do states with more income inequality have earlier registration deadlines?  Classical inference.
 m1 <- lm(regdays ~ stategini + stdiversity + over64 + college + stincpc +
@@ -79,7 +75,23 @@ b.gini.plot <- qplot(m1.stan.sim$beta2, geom="density") +
 
 b.gini.plot
 
-# based, in part, on Kruschke (2011, 628-29)
+# Graph regression results
+states2 <- states
+
+# Standardize continuous IVs by dividing by 2 s.d.s (per Gelman (2008))
+for (iv in 3:9) {
+    states2[,iv] <- states2[,iv]/(2*sd(states2[,iv]))
+}
+
+states2.data <- list(N = nrow(states2), regdays = states2$regdays, stategini = states2$stategini,
+                     stdiversity = states2$stdiversity, over64 = states2$over64, 
+                     college = states2$college, stincpc = states2$stincpc, south = states2$south)
+
+set.seed(324)
+m1.stan2 <- stan(fit=m1.stan, data=states2.data, iter = 10000, chains = 3)
+m1.stan2.sim <- as.data.frame(m1.stan2)
+
+# HDI.posterior is based, in part, on Kruschke (2011, 628-29)
 HDI.posterior <- function(data = NULL, mass = .95) {
     n.var <- dim(data)[2]-2
     results.HDI <- matrix(rep(NA,3*n.vars), nrow=n.vars, ncol=3)
@@ -102,7 +114,7 @@ HDI.posterior <- function(data = NULL, mass = .95) {
     return(results.HDI)
 }
 
-reg.results <- HDI.posterior(m1.stan.sim)   
+reg.results <- HDI.posterior(m1.stan2.sim)   
 reg.results <- reg.results[-1,]             # exclude constant (not interesting)
 reg.results$no <- 1:dim(reg.results)[1]     # an index to order the variables
 reg.results$var <- c("Income Inequality", "Ethnic Diversity", "Senior Population",
@@ -116,3 +128,49 @@ reg.plot <- ggplot(data = reg.results, aes(y = no, x = b)) +
     geom_vline(xintercept=c(0), linetype="dotted")
 
 reg.plot
+
+
+
+regdays.code2 <- '
+    data {
+        int<lower=0> N;
+        vector[N] regdays;
+        vector[N] stategini;
+        vector[N] stdiversity;
+        vector[N] over64;
+        vector[N] college;
+        vector[N] stincpc;
+        vector[N] south;
+    }
+    parameters {                
+        real beta1;             // coef for constant (default prior is uniform, i.e., noninformative)
+        real beta2;             // coef for stategini
+        real beta3;
+        real beta4;
+        real beta5;
+        real beta6;
+        real beta7;
+        real<lower=0> sigma;
+    }
+    model {
+        beta1 ~ cauchy(0, 2.5);
+        beta2 ~ cauchy(0, 2.5);
+        beta3 ~ cauchy(0, 2.5);
+        beta4 ~ cauchy(0, 2.5);
+        beta5 ~ cauchy(0, 2.5);
+        beta6 ~ cauchy(0, 2.5);
+        beta7 ~ cauchy(0, 2.5);
+        
+        regdays ~ normal(beta1 + beta2 * stategini + beta3 * stdiversity +
+        beta4 * over64 + beta5 * college +
+        beta6 * stincpc + beta7 * south, sigma);
+    }
+'
+
+set.seed(324)
+m1.stan2.s2 <- stan(model_code = regdays.code2, data = states2.data, 
+                iter = 10000, chains = 3)
+
+print(m1.stan2)
+print(m1.stan2.s2)
+
