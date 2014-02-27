@@ -86,7 +86,7 @@ ipak <- function(pkg){
 packages <- c("ggplot2", "RCurl", "stargazer")
 ipak(packages)
 
-states <- read.csv(text = getURL("https://raw2.github.com/fsolt/POLI5003/master/statereg.csv"))
+states <- read.csv("statereg.csv")
 
 
 m1 <- lm(regdays ~ stategini + stdiversity + over64 + college + stincpc +
