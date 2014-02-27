@@ -24,9 +24,17 @@ summary(m1)
 
 # Bayesian Linear Regression in Stan
 # Install by following the directions at <https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started>
+library(rstan)
+set_cppo('fast')
+detach("package:rstan", unload = TRUE)
+remove.packages('rstan') 
+
+Sys.setenv(R_MAKEVARS_USER = "foobar")
+options(repos = c(getOption("repos"), rstan = "http://wiki.rstan-repo.googlecode.com/git/"))
+install.packages('rstan', type = 'source')
+Sys.unsetenv("R_MAKEVARS_USER")
+
 require(rstan)
-set_cppo("fast")
-set_cppo('debug')
 
 # First we have to define the model
 regdays.code <- '
@@ -81,7 +89,7 @@ b.gini.plot
 states2 <- states
 
 # Standardize continuous IVs by dividing by 2 s.d.s (per Gelman (2008))
-for (iv in 3:9) {
+for (iv in 4:8) {
     states2[,iv] <- states2[,iv]/(2*sd(states2[,iv]))
 }
 
