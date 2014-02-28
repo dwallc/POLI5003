@@ -58,7 +58,7 @@ ci
 # Interactions: How to model conditional hypotheses
 # Is effect of inequality affected by level of ethnic diversity?
 m2 <- lm(regdays ~ stategini + stdiversity + stdiversity:stategini + over64 + college + stincpc +
-             south, data=states)
+           south, data=states)
 summary(m2)
 
 set.seed(324)
@@ -67,34 +67,22 @@ apply(m2.sims@coef, 2, mean)
 
 
 coef.gini <- data.frame(fake_stdiversity = seq(min(states$stdiversity), max(states$stdiversity), 
-<<<<<<< HEAD
                                                length.out=100), coef_gini = NA, ub_gini = NA, lb_gini = NA)
-=======
-                        length.out=100), coef_gini = NA, ub_gini = NA, lb_gini = NA)
->>>>>>> upstream/master
 
 
 for(i in 1:100) {   
-    coef.gini$coef_gini[i] <- mean(m2.sims@coef[,2] + 
-<<<<<<< HEAD
-                                       coef.gini$fake_stdiversity[i]*m2.sims@coef[,8])
-    coef.gini$ub_gini[i] <- quantile(m2.sims@coef[,2] + 
-                                         coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .975)
-    coef.gini$lb_gini[i] <- quantile(m2.sims@coef[,2] + 
-                                         coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .025)    
-=======
-            coef.gini$fake_stdiversity[i]*m2.sims@coef[,8])
-    coef.gini$ub_gini[i] <- quantile(m2.sims@coef[,2] + 
-            coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .975)
-    coef.gini$lb_gini[i] <- quantile(m2.sims@coef[,2] + 
-            coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .025)    
->>>>>>> upstream/master
+  coef.gini$coef_gini[i] <- mean(m2.sims@coef[,2] + 
+                                   coef.gini$fake_stdiversity[i]*m2.sims@coef[,8])
+  coef.gini$ub_gini[i] <- quantile(m2.sims@coef[,2] + 
+                                     coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .975)
+  coef.gini$lb_gini[i] <- quantile(m2.sims@coef[,2] + 
+                                     coef.gini$fake_stdiversity[i]*m2.sims@coef[,8], .025)    
 }
 
 gini.coef.plot <- ggplot(coef.gini, aes(x = fake_stdiversity, y = coef_gini)) + 
-    geom_line() + geom_ribbon(aes(ymin=lb_gini, ymax=ub_gini), alpha=.5) +
-    xlab("State Ethnic Diversity") + ylab("Coefficient for State Income Inequality") +
-    scale_x_continuous(limits=c(0,80))
+  geom_line() + geom_ribbon(aes(ymin=lb_gini, ymax=ub_gini), alpha=.5) +
+  xlab("State Ethnic Diversity") + ylab("Coefficient for State Income Inequality") +
+  scale_x_continuous(limits=c(0,80))
 
 gini.coef.plot
 
@@ -103,14 +91,14 @@ coef.div <- data.frame(fake_stategini = seq(min(states$stategini), max(states$st
                                             length.out=100), coef_div = NA, ub_div = NA, lb_div = NA)
 
 for(i in 1:100) {   
-    coef.div$coef_div[i] <- mean(m2.sims@coef[,2] + coef.div$fake_stategini[i]*m2.sims@coef[,8])
-    coef.div$ub_div[i] <- quantile(m2.sims@coef[,2] + coef.div$fake_stategini[i]*m2.sims@coef[,8], .975)
-    coef.div$lb_div[i] <- quantile(m2.sims@coef[,2] + coef.div$fake_stategini[i]*m2.sims@coef[,8], .025)    
+  coef.div$coef_div[i] <- mean(m2.sims@coef[,2] + coef.div$fake_stategini[i]*m2.sims@coef[,8])
+  coef.div$ub_div[i] <- quantile(m2.sims@coef[,2] + coef.div$fake_stategini[i]*m2.sims@coef[,8], .975)
+  coef.div$lb_div[i] <- quantile(m2.sims@coef[,2] + coef.div$fake_stategini[i]*m2.sims@coef[,8], .025)    
 }
 
 div.coef.plot <- ggplot(coef.div, aes(x = fake_stategini, y = coef_div)) + 
-    geom_line() + geom_ribbon(aes(ymin=lb_div, ymax=ub_div), alpha=.5) +
-    xlab("State Income Inequality") + ylab("Coefficient for State Ethnic Diversity") +
-    scale_x_continuous(limits=c(40,50))
+  geom_line() + geom_ribbon(aes(ymin=lb_div, ymax=ub_div), alpha=.5) +
+  xlab("State Income Inequality") + ylab("Coefficient for State Ethnic Diversity") +
+  scale_x_continuous(limits=c(40,50))
 
 div.coef.plot
