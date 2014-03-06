@@ -79,7 +79,7 @@ b.gini.plot
 states2 <- states
 
 # Standardize continuous IVs by dividing by 2 s.d.s (per Gelman (2008))
-for (iv in 3:9) {
+for (iv in 4:8) {
     states2[,iv] <- states2[,iv]/(2*sd(states2[,iv]))
 }
 
