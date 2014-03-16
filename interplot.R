@@ -1,5 +1,6 @@
 interplot <- function(m, var1, var2, seed=324, sims=1000, steps=100, plot=TRUE) {
     require(arm)
+    require(ggplot2)
     set.seed(seed)
     m.sims <- sim(m, sims)
     
