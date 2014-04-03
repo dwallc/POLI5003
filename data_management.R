@@ -9,6 +9,17 @@
 #   Aggregating
 #   Merging
 
+### Load packages, installing if necessary
+ipak <- function(pkg){
+    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+    if (length(new.pkg)) 
+        install.packages(new.pkg, dependencies = TRUE)
+    sapply(pkg, require, character.only = TRUE)
+}
+
+packages <- c("XML", "RCurl", "doBy")
+ipak(packages)
+
 
 ### Scraping Web Tables
 # Importing local files is straightforward:
@@ -47,6 +58,9 @@ names(gsi) <- c("rank", "country", "pop", "slaves.est",
                 "slaves.lb", "slaves.ub")
 # We can also change just one variable name at a time
 names(gsi)[4] <- "slaves"   # Fourth element of the vector!
+
+# Making a new variable
+gsi$slaves.10k <- round((with(gsi, (slaves/pop) * 10000 )), digits=1)
 
 
 ### Reordering Observations
@@ -100,7 +114,7 @@ gsi.eurasia <- rbind(gsi.europe, gsi.asia)
 # R doesn't read excel files very well (thanks, M$), so first save it as a csv and  
 # we'll start from there.
 
-fh <- read.csv("Country Ratings and Status, 1973-2014 (FINAL).csv", 
+fh <- read.csv(text = getURL("https://github.com/fsolt/POLI5003/raw/master/Country%20Ratings%20and%20Status%2C%201973-2014%20(FINAL).csv"), 
                             as.is=T, skip=7, header=F)
 
 # Fix variable names
@@ -148,4 +162,8 @@ fh2$country[fh2$country=="Trinidad & Tobago"] <- "Trinidad and Tobago"
 gsi.fh2 <- merge(x=gsi, y=fh2, all.x=T)
 gsi.fh2[is.na(gsi.fh2$PR), "country"]       # Just Hong Kong
 
+
+### A Toy Model
+
+m1 <- lm(slaves.10k ~ CL, data=gsi.fh2)
 
