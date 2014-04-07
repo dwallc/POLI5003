@@ -58,6 +58,9 @@ names(gsi) <- c("rank", "country", "pop", "slaves.est",
                 "slaves.lb", "slaves.ub")
 # We can also change just one variable name at a time
 names(gsi)[4] <- "slaves"   # Fourth element of the vector!
+names(gsi)[which(names(gsi)=="slaves")] <- "slaves.est"     # Too many to count?
+names(gsi)[4] <- "slaves"   # Change it back
+
 
 # Making a new variable
 gsi$slaves.10k <- round((with(gsi, (slaves/pop) * 10000 )), digits=1)
