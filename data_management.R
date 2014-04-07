@@ -122,7 +122,11 @@ fh <- read.csv("Country Ratings and Status, 1973-2014 (FINAL).csv",
 
 # Fix variable names
 fh.vars <- c("PR", "CL", "Status")
+<<<<<<< HEAD
 fh.years <- c(1972:1981, 1983:2013)
+=======
+fh.years <- c(1972:1981, 1984:2013)
+>>>>>>> f1dae46c2e3ab3c14c407aab795522339d18ae7e
 fh.names <- c("country", paste(rep(fh.vars, times=length(fh.years)),
                                 rep(fh.years, each=length(fh.vars)), sep=".")) # Nifty, huh?
 names(fh) <- fh.names
