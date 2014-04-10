@@ -2,6 +2,12 @@
 
 # What are the most important assumptions of the linear regression model?
 # And how do we diagnose violations and correct problems?  
+#   1. VALIDITY!
+#   2. LINEARITY
+#   3. ADDITIVITY
+#   4. Independent Errors
+#   5. Homoskedasticity
+#   6. A nuisance: normality of errors
 
 # 1. VALIDITY!
 # The single most important issue encountered in doing regression analysis regards
@@ -161,4 +167,6 @@ compareCoefs(m2c, m2c2)
 # such points should be examined to determine if they are erroneous, perhaps due 
 # to a data-entry error.  If the data for the observation are indeed correct, the
 # observation should then be scrutinized for its theoretical implications (see 
-# Stephens 1979 for a pioneering example). 
+# Stephens 1979 for a pioneering example).  Observations should *never* be deleted
+# without discussion!  If one excludes points from a sample merely on grounds of
+# influence, one has to explain this and its effect on the results.
