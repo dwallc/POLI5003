@@ -118,12 +118,12 @@ residualPlots(m2b)
 
 residualPlots(m2c)
 
-# The traditional advice, though, is to use weighted least squares, which weights
-# each observation inversely proportional to its variance.  This, however, requires
-# the variance to be known--a whole new can of worms.  In very large datasets, one  
-# might estimate the variance empirically, but the Prestige dataset (N=102) isn't 
-# particularly big.  As it appears that the variance decreases with income, we can
-# calculate weights that decrease with income:
+# Another option is to use weighted least squares, which weights each observation
+# inversely proportional to its variance.  This, however, requires the variance
+# to be known.  In very large datasets, one might estimate the variance empirically,
+# but the Prestige dataset (N=102) used here isn't particularly big.  As it appears
+# that the variance decreases with income, we can calculate weights that also  
+# decrease with income:
 
 wt <- with(Prestige, 1/(max(income)-income+1))
 m2d <- lm(prestige ~ education + inc1 + income + type, data=Prestige, weight=wt)
