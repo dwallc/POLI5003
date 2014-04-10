@@ -58,6 +58,9 @@ names(gsi) <- c("rank", "country", "pop", "slaves.est",
                 "slaves.lb", "slaves.ub")
 # We can also change just one variable name at a time
 names(gsi)[4] <- "slaves"   # Fourth element of the vector!
+names(gsi)[which(names(gsi)=="slaves")] <- "slaves.est"     # Too many to count?
+names(gsi)[4] <- "slaves"   # Change it back
+
 
 # Making a new variable
 gsi$slaves.10k <- round((with(gsi, (slaves/pop) * 10000 )), digits=1)
@@ -119,7 +122,7 @@ fh <- read.csv("Country Ratings and Status, 1973-2014 (FINAL).csv",
 
 # Fix variable names
 fh.vars <- c("PR", "CL", "Status")
-fh.years <- c(1972:1980, 1981, 1983, 1984:2013)
+fh.years <- c(1972:1981, 1983:2013)
 fh.names <- c("country", paste(rep(fh.vars, times=length(fh.years)),
                                 rep(fh.years, each=length(fh.vars)), sep=".")) # Nifty, huh?
 names(fh) <- fh.names
