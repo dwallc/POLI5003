@@ -6,6 +6,7 @@
     # Assumptions: overlap
     # Assumptions: balance
     # Assumptions: ignorability
+    # Matching: an example
 
 # Causal vs. predictive inference
 
@@ -59,6 +60,7 @@
 # Ignorability: no omitted confounders.  Do your best to think of what you might
 # need to control for--there's no way to assess ignorability empirically.
 
+# An Example
 # Suppose we are in the leadership of the Canadian teacher's union, and we want 
 # our primary-school teachers to enjoy greater prestige than they do currently
 # (that is, in 1971 when these data were collected).  Can we boost teachers' 
