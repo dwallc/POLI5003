@@ -138,4 +138,10 @@ summary(m3)
 
 # Wow--by ensuring balance on income, the matched data allows a sharper
 # comparison: boosting education is estimated to cause a 6.8 point increase
-# in prestige.  Let's push those credentials up!  What could go wrong?
+# in prestige.  Let's push those credentials up!  What could go wrong?  Well,
+# besides barristas with MFAs . . .
+
+# This is a small dataset so we can check the plausibility of the match directly:
+P.matched$match.matrix
+
+P.m[order(P.m$income), c("income", "educ.m14", "prestige")]
